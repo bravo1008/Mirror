@@ -202,7 +202,7 @@ const MagicMirror = () => {
         <Typography
           variant="h4"
           sx={{
-            fontSize: '2rem',
+            fontSize: '2.4rem',
             fontWeight: 700,
             background: 'linear-gradient(90deg, #ff6bfb, #a855f7)',
             WebkitBackgroundClip: 'text',
