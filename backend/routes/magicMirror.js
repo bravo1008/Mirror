@@ -63,7 +63,7 @@ async function generateMagicMirrorImage(originalImageUrl, effect) {
     bald: `基于这张人脸照片，生成一张局部斑秃(alopecia areata)的新图像：
         
     【医学特征描述】
-    - 斑秃类型：典型的圆形或椭圆形斑块状脱发
+    - 斑秃类型：典型的斑块状脱发
     - 脱发区域：头部出现2-4个不连续的脱发秃斑区域，此区域没有头发，露出头皮（直径2-5cm）
     - 分布位置：通常位于头顶、枕部或颞部，不对称分布
     - 边缘特征：脱发区域边缘清晰，周围有"感叹号样"短发

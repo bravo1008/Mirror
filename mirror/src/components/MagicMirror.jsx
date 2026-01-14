@@ -194,7 +194,7 @@ const MagicMirror = () => {
         <StarIcon
           sx={{
             color: '#FFD700', // ✅ 使用标准金色（更亮）
-            fontSize: '2.6rem',
+            fontSize: '2rem',
             //boxShadow: '0 0 12px rgba(255, 215, 0, 0.8), 0 0 24px rgba(255, 215, 0, 0.6)', // ✅ 加光晕
             animation: 'pulse 2s infinite alternate', // ✅ 轻微脉动
           }}
@@ -202,7 +202,7 @@ const MagicMirror = () => {
         <Typography
           variant="h4"
           sx={{
-            fontSize: '2.6rem',
+            fontSize: '2rem',
             fontWeight: 700,
             background: 'linear-gradient(90deg, #ff6bfb, #a855f7)',
             WebkitBackgroundClip: 'text',
@@ -223,8 +223,8 @@ const MagicMirror = () => {
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
             color: 'white',
-            px: 2,
-            py: 1,
+           // px: 1,
+            //py: 1,
             borderRadius: '12px',
             fontSize: '0.875rem',
             textAlign: 'center',
@@ -242,7 +242,7 @@ const MagicMirror = () => {
         sx={{
           textAlign: 'center',
           mb: 4,
-          fontSize: '1.2rem',
+          fontSize: '1rem',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           maxWidth: '100%',
