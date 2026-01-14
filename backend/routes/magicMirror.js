@@ -66,7 +66,7 @@ async function generateMagicMirrorImage(originalImageUrl, effect) {
       - 边缘呈现**“感叹号样”短发**（末端变细，呈放射状）
       - 脱发区周围头发**密度渐变过渡**，非突然断裂
       - 严格保持原脸型、肤色、表情、光照
-      - 禁止：规则圆形/椭圆、对称分布、全秃、红肿炎症`，
+      - 禁止：规则圆形/椭圆、对称分布、全秃、红肿炎症`,
 
     thinning: `将此人像修改为【早期雄激素性脱发（Norwood II-III级）】状态：
       - **M型发际线后移**（额角退缩1-2cm）
