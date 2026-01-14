@@ -145,11 +145,11 @@ const MagicMirror = () => {
       case '健康': effectKey = 'healthy'; break;
       default: return;
     }
-    //https://mirror-lcd5.onrender.com
+    //https://mirror-lcd5.onrender.comhttp://localhost:5000
 
     try {
       setIsGenerating(true);
-      const response = await fetch(`http://localhost:5000/api/magic-mirror/generate`, {
+      const response = await fetch(`https://mirror-lcd5.onrender.com/api/magic-mirror/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
