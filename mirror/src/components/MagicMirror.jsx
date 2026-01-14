@@ -145,7 +145,7 @@ const MagicMirror = () => {
 
     try {
       setIsGenerating(true);
-      const response = await fetch(`http://localhost:5000/api/magic-mirror/generate`, {
+      const response = await fetch(`https://mirror-lcd5.onrender.com/api/magic-mirror/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
