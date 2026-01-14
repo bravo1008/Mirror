@@ -9,6 +9,7 @@ import Webcam from 'react-webcam';
 const MagicMirror = () => {
   const [imageSrc, setImageSrc] = useState(''); // 本地预览图（base64 或 URL）
   const [uploadedImageUrl, setUploadedImageUrl] = useState(''); // 公网可访问的 Cloudinary URL
+  const [originalImageUrl, setOriginalImageUrl] = useState(''); // ✅ 新增：永远保存原始图
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [magicPower, setMagicPower] = useState(0);
@@ -86,6 +87,7 @@ const MagicMirror = () => {
       setImageSrc(base64Image); // 本地预览
       const publicUrl = await uploadToCloudinary(base64Image);
       setUploadedImageUrl(publicUrl);
+      setOriginalImageUrl(publicUrl); // ✅ 保存原始图
       setShowOptions(true);
       setIsCameraActive(false);
     } catch (err) {
@@ -107,6 +109,7 @@ const MagicMirror = () => {
         setImageSrc(base64);
         const publicUrl = await uploadToCloudinary(base64);
         setUploadedImageUrl(publicUrl);
+        setOriginalImageUrl(publicUrl); // ✅ 保存原始图
         setIsUploading(false); 
         setShowOptions(true);
         setIsCameraActive(false);
@@ -133,7 +136,7 @@ const MagicMirror = () => {
 
   // 应用魔法效果
   const applyEffect = async (effectName) => {
-    if (!uploadedImageUrl || isGenerating) return;
+    if (!originalImageUrl || isGenerating) return;
 
     let effectKey;
     switch (effectName) {
@@ -142,14 +145,15 @@ const MagicMirror = () => {
       case '健康': effectKey = 'healthy'; break;
       default: return;
     }
+    //https://mirror-lcd5.onrender.com
 
     try {
       setIsGenerating(true);
-      const response = await fetch(`https://mirror-lcd5.onrender.com/api/magic-mirror/generate`, {
+      const response = await fetch(`http://localhost:5000/api/magic-mirror/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          imageUrl: uploadedImageUrl,
+          imageUrl: originalImageUrl,
           effect: effectKey
         })
       });
@@ -174,6 +178,7 @@ const MagicMirror = () => {
   const resetToDefault = () => {
     setIsCameraActive(false);
     setImageSrc('');
+    setOriginalImageUrl(''); // ✅ 清空原始图
     setUploadedImageUrl('');
     setShowOptions(false);
     setAppliedEffect('');
