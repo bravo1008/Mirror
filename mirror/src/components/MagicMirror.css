@@ -1,0 +1,33 @@
+/* src/components/MagicMirror.css */
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* 确保图片路径正确 */
+img[src*="mirror.png"] {
+  image-rendering: crisp-edges;
+}
+
+/* src/components/MagicMirror.css */
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 毛玻璃背景支持 */
+@media (min-width: 768px) {
+  .MuiPaper-root {
+    backdrop-filter: blur(10px);
+  }
+}

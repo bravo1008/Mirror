@@ -1,0 +1,62 @@
+/* src/components/MeteorRain.css */
+
+.meteor-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 不影响点击 */
+  z-index: 0; /* 置于内容下方但不被 body 背景遮挡 */
+}
+
+.meteor {
+  position: absolute;
+  width: 3px;
+  height: 40px;
+  /* 垂直流星：上端更亮，下端渐隐 */
+  background: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.1));
+  animation: fall linear forwards;
+  border-radius: 999px;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 1);
+  opacity: 1;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,1));
+}
+
+/* 线条型流星 */
+.meteor.line {
+  width: 3px;
+  height: 36px;
+  background: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.2));
+}
+
+/* 亮点型流星：更大、偏圆点，和线条明显区分 */
+.meteor.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 0 24px rgba(255,255,255,1),
+    0 0 32px rgba(255,255,255,0.9);
+  animation: fall linear forwards, twinkle 0.6s ease-in-out infinite alternate;
+}
+
+/* 轻微闪烁，让亮点更有“闪光感” */
+@keyframes twinkle {
+  0% { opacity: 0.7; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* 垂直降落动画 */
+@keyframes fall {
+  0% {
+    transform: translateY(-20vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
+}

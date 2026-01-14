@@ -1,0 +1,116 @@
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(120, 50, 180, 0.35), rgba(20, 10, 50, 0.1) 50%, rgba(8, 4, 20, 0.6) 100%);
+}
+
+.aurora-layer {
+  position: absolute;
+  width: 140%;
+  height: 120%;
+  filter: blur(48px);
+  opacity: 0.65;
+  animation: aurora-move 18s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+}
+
+.layer-1 {
+  background: radial-gradient(50% 50% at 30% 40%, rgba(120, 200, 255, 0.5), rgba(120, 200, 255, 0));
+  animation-duration: 16s;
+  transform: translate(-10%, -10%);
+}
+
+.layer-2 {
+  background: radial-gradient(60% 60% at 70% 50%, rgba(180, 120, 255, 0.55), rgba(180, 120, 255, 0));
+  animation-duration: 20s;
+  animation-delay: -4s;
+  transform: translate(5%, -5%);
+}
+
+.layer-3 {
+  background: radial-gradient(55% 55% at 50% 70%, rgba(255, 120, 200, 0.45), rgba(255, 120, 200, 0));
+  animation-duration: 22s;
+  animation-delay: -8s;
+  transform: translate(-5%, 0%);
+}
+
+.aurora-stars {
+  position: absolute;
+  inset: 0;
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+  /* 闪烁 + 缓慢漂移 */
+  animation:
+    star-twinkle 2.4s ease-in-out infinite,
+    star-drift 16s linear infinite alternate;
+}
+
+.star:nth-child(odd) {
+  width: 3px;
+  height: 3px;
+  animation-duration: 3s;
+}
+
+.star:nth-child(3n) {
+  animation-delay: -1s;
+}
+
+/* 随机分布星星位置 */
+.star:nth-child(1) { top: 10%; left: 15%; }
+.star:nth-child(2) { top: 22%; left: 35%; }
+.star:nth-child(3) { top: 18%; left: 70%; }
+.star:nth-child(4) { top: 30%; left: 55%; }
+.star:nth-child(5) { top: 42%; left: 22%; }
+.star:nth-child(6) { top: 48%; left: 78%; }
+.star:nth-child(7) { top: 55%; left: 12%; }
+.star:nth-child(8) { top: 62%; left: 38%; }
+.star:nth-child(9) { top: 68%; left: 65%; }
+.star:nth-child(10) { top: 74%; left: 28%; }
+.star:nth-child(11) { top: 82%; left: 52%; }
+.star:nth-child(12) { top: 88%; left: 72%; }
+.star:nth-child(13) { top: 14%; left: 82%; }
+.star:nth-child(14) { top: 26%; left: 18%; }
+.star:nth-child(15) { top: 34%; left: 48%; }
+.star:nth-child(16) { top: 46%; left: 68%; }
+.star:nth-child(17) { top: 58%; left: 24%; }
+.star:nth-child(18) { top: 64%; left: 48%; }
+.star:nth-child(19) { top: 70%; left: 84%; }
+.star:nth-child(20) { top: 78%; left: 16%; }
+.star:nth-child(21) { top: 12%; left: 52%; }
+.star:nth-child(22) { top: 38%; left: 76%; }
+.star:nth-child(23) { top: 60%; left: 60%; }
+.star:nth-child(24) { top: 50%; left: 40%; }
+.star:nth-child(25) { top: 30%; left: 20%; }
+.star:nth-child(26) { top: 20%; left: 60%; }
+.star:nth-child(27) { top: 80%; left: 32%; }
+.star:nth-child(28) { top: 72%; left: 46%; }
+
+@keyframes aurora-move {
+  0% { transform: translate(-10%, -10%) scale(1); }
+  100% { transform: translate(8%, 6%) scale(1.12); }
+}
+
+@keyframes star-twinkle {
+  0% { opacity: 0.4; box-shadow: 0 0 5px rgba(255,255,255,0.7); }
+  50% { opacity: 1; box-shadow: 0 0 10px rgba(255,255,255,1); }
+  100% { opacity: 0.5; box-shadow: 0 0 6px rgba(255,255,255,0.8); }
+}
+
+/* 星点在小范围内慢慢漂移，增加灵动感 */
+@keyframes star-drift {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(10px, -8px); }
+  66%  { transform: translate(-8px, 6px); }
+  100% { transform: translate(7px, 10px); }
+}
+
