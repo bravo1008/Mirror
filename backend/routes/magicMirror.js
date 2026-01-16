@@ -1,4 +1,3 @@
-// backend/routes/magicMirror.js
 const express = require('express');
 const axios = require('axios');
 const FormData = require('form-data');
@@ -6,7 +5,7 @@ const FormData = require('form-data');
 const router = express.Router();
 
 // =======================
-// 复用：将临时图片上传到 Cloudinary（持久化）
+// 持久化图片到 Cloudinary
 // =======================
 async function persistImageToCloudinary(tempImageUrl) {
   if (!tempImageUrl) return "";
@@ -51,7 +50,7 @@ async function persistImageToCloudinary(tempImageUrl) {
 }
 
 // =======================
-// 图生图：调用 qwen-vl-plus 实现魔法效果（✅ 使用与 dream.js 相同的解析逻辑）
+// AI 图生图：调用 qwen-vl-plus 实现魔法效果
 // =======================
 async function generateMagicMirrorImage(originalImageUrl, effect) {
   const apiKey = process.env.TYQW_API2_KEY;
@@ -77,12 +76,21 @@ async function generateMagicMirrorImage(originalImageUrl, effect) {
       - 禁止：任何斑块状脱发、全秃、对称分布、卡通风格
       - 强制要求：发际线呈现自然后退，非直线切割`,
 
-    healthy: `将此人像修改为【健康浓密头发】状态：
+    whitehair: `将此人像修改为【遗传性白发】状态：
+      - **头发颜色**：从发根开始出现白色毛发，占比30%-50%
+      - **分布特点**：主要集中在前额、鬓角及头顶区域，自然过渡
+      - **发丝质感**：白发与黑发混杂，保持自然纹理和光泽
+      - **整体效果**：保留原有发型结构，避免“花白”过度或均匀分布
+      - **禁止项**：全部变白、染发感、人工合成痕迹、卡通风格
+      - **光照一致性**：保持原始图像的光照与阴影关系`,
+
+    repair: `将此人像修改为【浓密健康秀发】状态：
       - **发量饱满**，头皮几乎不可见（覆盖率>95%）
       - 发际线完整，无后移或稀疏
-      - 头发有自然光泽和纹理
+      - 头发有自然光泽和纹理，发丝分明
       - 严格保持原脸型、肤色、表情、光照
-      - 禁止：任何脱发迹象、秃斑、稀疏区域`
+      - 禁止：任何脱发迹象、秃斑、稀疏区域、假发感
+      - 强制要求：发丝自然流动，无粘连或僵硬`
   };
 
   const prompt = effectPrompts[effect];
@@ -94,7 +102,7 @@ async function generateMagicMirrorImage(originalImageUrl, effect) {
     const resp = await axios.post(
       "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
       {
-        model: "qwen-image-edit-plus", // ✅ 关键：必须用 image-plus
+        model: "qwen-image-edit-plus",
         input: {
           messages: [
             {
@@ -120,7 +128,6 @@ async function generateMagicMirrorImage(originalImageUrl, effect) {
       }
     );
 
-    // 使用与 dream.js 相同的解析逻辑
     const choice = resp.data?.output?.choices?.[0];
     const imageField = choice?.message?.content?.find?.((x) => x.image);
     const aiImageUrl = imageField?.image;
@@ -148,18 +155,14 @@ router.post("/generate", async (req, res) => {
     return res.status(400).json({ success: false, error: "原图 URL 不能为空" });
   }
 
-  if (!effect || !["bald", "thinning", "healthy"].includes(effect)) {
+  if (!effect || !["bald", "thinning", "whitehair", "repair"].includes(effect)) {
     return res.status(400).json({ success: false, error: "无效的效果类型" });
   }
 
   try {
-    // 1. 调用 AI 生成临时图片
     const tempImageUrl = await generateMagicMirrorImage(imageUrl, effect);
-
-    // 2. 持久化到 Cloudinary
     const permanentImageUrl = await persistImageToCloudinary(tempImageUrl);
 
-    // 3. 返回结果
     res.json({
       success: true,
       data: {
